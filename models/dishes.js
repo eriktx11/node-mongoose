@@ -1,6 +1,22 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
+var commentSchema = new Schema (
+    {
+        comment:{
+            type: String,
+            required: true,
+        },
+        user:
+        {
+            type: String,
+            require: true
+        },
+    },{
+        timestamps: true
+    }
+)
+
 var dishSchema = new Schema (
     {
     name: 
@@ -12,10 +28,11 @@ var dishSchema = new Schema (
     {
         type: String,
         required: true
-    }
+    },
+    comments: [ commentSchema ]
     },
     {
-        timestamps: true 
+    timestamps: true 
     }
 );
 
