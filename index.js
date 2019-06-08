@@ -1,33 +1,29 @@
-const Dish = require('./models/dishes');
-const url = 'mongodb://localhost:27017/conFusion';
+const Dishes = require('./models/dishes');
 const mongoose = require('mongoose');
+const url = 'mongodb://localhost:27017/conFusion';
 
 const connect = mongoose.connect(url);
 
 connect.then((db)=>{
     
-    Dish.create({
-        name: 'Uthapizza',
-        description: 'Test'
-
+    Dishes.create({
+        name: 'BurgerRice',
+        description: 'IN CA'
     })
-    .then((dish)=>{
-        return Dish.findByIdAndUpdate(dish._id,
-            { $set:{ description: 'Updated text' } }, { new: true} 
-            ).exec();
-        })
-    .then((dish)=>{
-         dish.comments.push({
-            user: 'Jose',
-            comment: 'it is going'
-         });
-         return dish.save();
+    .then((dishes)=>{
+        return Dishes.findByIdAndUpdate(dishes._id, { $set: { description: 'Other mod text' }}, {new: true} ).exec();
     })
-    .then((dish) => {
-        console.log(dish);
-        return Dish.remove({});
+    .then((dishes)=>{
+        dishes.comments.push({
+            feedback: 'Extract',
+            user: 'Robib'
+        });
+        console.log(dishes);
+        return dishes.save();
     })
-
+    .then((dishes)=>{
+        return Dishes.remove({});
+    })
     .then(()=>{
         return mongoose.connection.close();
     })
